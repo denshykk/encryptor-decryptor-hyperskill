@@ -7,7 +7,7 @@ public class UnicodeAlgorithmImpl implements Algorithm {
      * message * by shifting every letter through the Unicode table by a given offset (key).
      *
      * @param message data that are going to be encrypted
-     * @param key offset (key), by which letters will be shifted.
+     * @param key     offset (key), by which letters will be shifted.
      * @return string value, encrypted text.
      */
     public String encrypt(String message, int key) {
@@ -26,7 +26,7 @@ public class UnicodeAlgorithmImpl implements Algorithm {
      * </p>
      *
      * @param message encrypted data that are going to be decrypted
-     * @param key offset, by which letters were shifted
+     * @param key     offset, by which letters were shifted
      * @return string value, decrypted text
      */
     public String decrypt(String message, int key) {

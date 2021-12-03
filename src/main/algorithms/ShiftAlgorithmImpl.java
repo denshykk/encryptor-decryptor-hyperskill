@@ -6,13 +6,13 @@ public class ShiftAlgorithmImpl implements Algorithm {
      * <p>
      * <a href="#{@link}">{@link ShiftAlgorithmImpl}</a> is an algorithm, that encrypts a message
      * by shifting every letter through the alphabet by a given offset (key).
-     *
+     * <p>
      * If the transformation goes beyond the uppercase or lowercase letter Z, we go back to
      * the start of the alphabet. It's accomplished by performing a modulo 26 operation on it.
      * </p>
      *
      * @param message data that are going to be encrypted
-     * @param key offset (key), by which letters will be shifted.
+     * @param key     offset (key), by which letters will be shifted.
      * @return string value, encrypted text
      */
     public String encrypt(String message, int key) {
@@ -36,7 +36,7 @@ public class ShiftAlgorithmImpl implements Algorithm {
      * </p>
      *
      * @param message encrypted data that are going to be decrypted
-     * @param key offset, by which letters were shifted
+     * @param key     offset, by which letters were shifted
      * @return string value, decrypted text
      */
     public String decrypt(String message, int key) {

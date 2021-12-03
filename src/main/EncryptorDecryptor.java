@@ -1,45 +1,27 @@
 package main;
 
-import main.algorithms.Algorithm;
-import main.algorithms.ShiftAlgorithmImpl;
-import main.algorithms.UnicodeAlgorithmImpl;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 
-public class EncryptorDecryptor {
-    private String mode;
-    private String data;
-    private int key;
-    private String in;
-    private String out;
-    private Algorithm algorithm;
-
-    public EncryptorDecryptor() {
-        mode = "enc";
-        data = "";
-        key = 0;
-        out = "";
-    }
-
+public record EncryptorDecryptor(ArgsParser parser) {
 
     public void invoke() {
         readFromFile();
-        String result = switch (this.mode) {
-            case "enc" -> algorithm.encrypt(data, key);
-            case "dec" -> algorithm.decrypt(data, key);
+        String result = switch (parser.getMode()) {
+            case "enc" -> parser.getAlgorithm().encrypt(parser.getData(), parser.getKey());
+            case "dec" -> parser.getAlgorithm().decrypt(parser.getData(), parser.getKey());
             default -> "";
         };
 
         writeToFile(result);
     }
 
-
     private void readFromFile() {
-        if (data.equals("") && in != null) {
+        if (parser.getData().isEmpty() && Objects.nonNull(parser.getIn())) {
             try {
-                data = new String(Files.readAllBytes(Paths.get(in)));
+                parser.setIn(new String(Files.readAllBytes(Paths.get(parser.getIn()))));
             } catch (IOException e) {
                 System.err.println("Error reading from file");
                 System.exit(1);
@@ -48,48 +30,14 @@ public class EncryptorDecryptor {
     }
 
     private void writeToFile(String result) {
-        if (out.equals("")) System.out.println(result);
-        else {
+        if (parser.getOut().isEmpty()) {
+            System.out.println(result);
+        } else {
             try {
-                Files.write(Paths.get(out), result.getBytes());
+                Files.write(Paths.get(parser.getOut()), result.getBytes());
             } catch (IOException e) {
                 System.err.println("Error writing to the file");
                 System.exit(1);
-            }
-        }
-    }
-
-    public void parseArgs(String[] args) {
-        for (int i = 0; i < args.length; i += 2) {
-            switch (args[i]) {
-                case "-mode":
-                    mode = args[i + 1];
-                    break;
-                case "-key":
-                    key = Integer.parseInt(args[i + 1]);
-                    break;
-                case "-data":
-                    data = args[i + 1];
-                    break;
-                case "-in":
-                    in = args[i + 1];
-                    break;
-                case "-out":
-                    out = args[i + 1];
-                    break;
-                case "-alg":
-                    switch (args[i + 1]) {
-                        case "shift" -> algorithm = new ShiftAlgorithmImpl();
-                        case "unicode" -> algorithm = new UnicodeAlgorithmImpl();
-                        default -> {
-                            System.err.println("unknown algorithm " + args[i + 1]);
-                            System.exit(1);
-                        }
-                    }
-                    break;
-                default:
-                    System.err.println("Invalid argument");
-                    System.exit(1);
             }
         }
     }
