@@ -21,7 +21,7 @@ public record EncryptorDecryptor(ArgsParser parser) {
     private void readFromFile() {
         if (parser.getData().isEmpty() && Objects.nonNull(parser.getIn())) {
             try {
-                parser.setIn(new String(Files.readAllBytes(Paths.get(parser.getIn()))));
+                parser.setData(new String(Files.readAllBytes(Paths.get(parser.getIn()))));
             } catch (IOException e) {
                 System.err.println("Error reading from file");
                 System.exit(1);
