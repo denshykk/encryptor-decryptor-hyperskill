@@ -39,7 +39,7 @@ public class ArgsParser {
         }
     }
 
-    public void parseKeyValue(String keyArgument) {
+    private void parseKeyValue(String keyArgument) {
         try {
             key = Integer.parseInt(keyArgument);
         } catch (NumberFormatException e) {
@@ -48,7 +48,7 @@ public class ArgsParser {
         }
     }
 
-    public void parseAlgorithm(String algorithmArgument) {
+    private void parseAlgorithm(String algorithmArgument) {
         if (algorithmArgument.equals(Algorithms.UNICODE.getLabel())) {
             algorithm = new UnicodeAlgorithmImpl();
         }
