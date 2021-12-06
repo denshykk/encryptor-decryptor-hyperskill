@@ -4,9 +4,13 @@ public enum Algorithms {
 
     UNICODE("unicode"), SHIFT("shift");
 
-    public final String label;
+    private final String label;
 
     Algorithms(String label) {
         this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

@@ -42,18 +42,15 @@ public class ArgsParser {
     public void parseKeyValue(String keyArgument) {
         try {
             key = Integer.parseInt(keyArgument);
-        } catch (
-                NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.err.println("Wrong offset (key) format");
             System.exit(1);
         }
     }
 
     public void parseAlgorithm(String algorithmArgument) {
-        if (algorithmArgument.equals(Algorithms.UNICODE.label)) {
+        if (algorithmArgument.equals(Algorithms.UNICODE.getLabel())) {
             algorithm = new UnicodeAlgorithmImpl();
-        } else {
-            algorithm = new ShiftAlgorithmImpl();
         }
     }
 
